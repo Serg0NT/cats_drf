@@ -29,7 +29,7 @@ class Kitten(models.Model):
     age = models.IntegerField(default=1, blank=False, null=False, verbose_name='Возраст')
     color = models.CharField(max_length=40, blank=False, null=False, verbose_name='Цвет')
     breed = models.ForeignKey(Breed, null=True, blank=True,
-                              related_name='breeds',
+                              related_name='kittens',
                               on_delete=models.SET_NULL,
                               verbose_name='Порода')
     title = models.TextField(max_length=256, verbose_name='Описание')

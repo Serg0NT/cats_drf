@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import KittensApiList, \
-    KittensApiAdd, \
-    BreedsApiList, \
-    BreedsRetrieveUpdateDestroy, \
-    KittensRetrieveUpdateDestroy
+from .views import (KittensApiList,
+                    KittensApiAdd,
+                    BreedsApiList,
+                    BreedsRetrieveUpdateDestroy,
+                    KittensRetrieveUpdateDestroy,
+                    KittensOfBreedApiList
+                    )
+
 
 urlpatterns = [
     # Просмотр всех котят
@@ -16,4 +19,6 @@ urlpatterns = [
     path('breeds/', BreedsApiList.as_view()),
     # Просмотр, добавление информации или удаление породы по id
     path('breeds/<int:pk>/', BreedsRetrieveUpdateDestroy.as_view()),
+    # Просмотр всех котят определенной породы
+    path('breeds/kittens/<int:pk>/', KittensOfBreedApiList.as_view()),
 ]

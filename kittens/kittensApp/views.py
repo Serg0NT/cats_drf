@@ -1,8 +1,8 @@
-from rest_framework import mixins, generics, status
-from rest_framework.permissions import IsAdminUser
+from rest_framework import mixins, generics, status, viewsets
+from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 
-from .serializers import KittenSerializer, BreedSerializer
+from .serializers import KittenSerializer, BreedSerializer, ShowKittensOfBreedSerializer
 from .models import Kitten, Breed
 
 
@@ -24,6 +24,7 @@ class KittensRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 class KittensApiAdd(generics.CreateAPIView):
     queryset = Kitten.objects.all()
     serializer_class = KittenSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class BreedsApiList(generics.ListAPIView):
@@ -36,4 +37,9 @@ class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Breed.objects.all()
     serializer_class = BreedSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+
+class KittensOfBreedApiList(generics.RetrieveAPIView):
+    queryset = Breed.objects.all()
+    serializer_class = ShowKittensOfBreedSerializer
 
