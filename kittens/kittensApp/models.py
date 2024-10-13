@@ -15,16 +15,6 @@ class Breed(models.Model):
         return f'{self.name}'
 
 
-#
-# class Owner(models.Model):
-#     name = models.CharField(max_length=24, blank=True, null=True, verbose_name='Имя')
-#     surname = models.CharField(max_length=24, blank=True, null=True, verbose_name='Фамилия')
-#     age = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(18)], verbose_name='Возраст')
-#
-#     def __str__(self):
-#         return f'{self.name} {self.surname}'
-
-
 class Kitten(models.Model):
     age = models.IntegerField(default=1, blank=False, null=False, verbose_name='Возраст')
     color = models.CharField(max_length=40, blank=False, null=False, verbose_name='Цвет')
@@ -38,5 +28,12 @@ class Kitten(models.Model):
                              on_delete=models.CASCADE,
                              verbose_name='Хозяин')
 
+    class Meta:
+        verbose_name = 'Котята'
+        verbose_name_plural = 'Котят'
+
     def __str__(self):
-        return f'{self.breed} {self.color} {self.age}'
+        return f'Порода - {self.breed}, ' \
+               f'Цвет -  {self.color}, ' \
+               f'Возраст -  {self.age}, ' \
+               f'Хозяин -  {self.user}'

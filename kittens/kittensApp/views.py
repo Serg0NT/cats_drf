@@ -39,7 +39,7 @@ class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminOrReadOnly]
 
 
-class KittensOfBreedApiList(generics.RetrieveAPIView):
+class KittensOfBreedApi(generics.RetrieveAPIView):
     queryset = Breed.objects.all()
     serializer_class = ShowKittensOfBreedSerializer
 

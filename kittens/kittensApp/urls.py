@@ -4,9 +4,8 @@ from .views import (KittensApiList,
                     BreedsApiList,
                     BreedsRetrieveUpdateDestroy,
                     KittensRetrieveUpdateDestroy,
-                    KittensOfBreedApiList
+                    KittensOfBreedApi
                     )
-
 
 urlpatterns = [
     # Просмотр всех котят
@@ -20,5 +19,5 @@ urlpatterns = [
     # Просмотр, добавление информации или удаление породы по id
     path('breeds/<int:pk>/', BreedsRetrieveUpdateDestroy.as_view()),
     # Просмотр всех котят определенной породы
-    path('breeds/kittens/<int:pk>/', KittensOfBreedApiList.as_view()),
+    path('breeds/kittens/<int:pk>/', KittensOfBreedApi.as_view()),
 ]
