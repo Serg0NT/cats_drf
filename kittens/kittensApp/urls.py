@@ -1,11 +1,11 @@
 from django.urls import path
-from .views import (KittensApiList,
-                    KittensApiAdd,
-                    BreedsApiList,
-                    BreedsRetrieveUpdateDestroy,
-                    KittensRetrieveUpdateDestroy,
-                    KittensOfBreedApi
-                    )
+from .views_api import (KittensApiList,
+                        KittensApiAdd,
+                        BreedsApiList,
+                        BreedsRetrieveUpdateDestroy,
+                        KittensRetrieveUpdateDestroy,
+                        KittensOfBreedApi
+                        )
 
 urlpatterns = [
     # Просмотр всех котят
