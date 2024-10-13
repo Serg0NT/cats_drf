@@ -11,7 +11,7 @@ urlpatterns = [
     # Просмотр всех котят
     path('kittens/', KittensApiList.as_view()),
     # Добавление нового котенка
-    path('kittens/add', KittensApiAdd.as_view()),
+    path('kittens/add/', KittensApiAdd.as_view()),
     # Просмотр, добавление информации или удаление котенка по id
     path('kittens/<int:pk>/', KittensRetrieveUpdateDestroy.as_view()),
     # Просмотр всех пород
