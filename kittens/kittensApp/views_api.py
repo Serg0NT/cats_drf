@@ -1,8 +1,8 @@
-from rest_framework import mixins, generics, status, viewsets
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 
-from .serializers import KittenSerializer, BreedSerializer, ShowKittensOfBreedSerializer
+from .serializers import KittenSerializer, BreedSerializer
 from .models import Kitten, Breed
 
 
@@ -10,7 +10,6 @@ from .models import Kitten, Breed
 class KittensApiList(generics.ListAPIView):
     queryset = Kitten.objects.all()
     serializer_class = KittenSerializer
-    # permission_classes = [IsAuthenticated]
 
 
 # Просмотр, добавление информации или удаление котенка по id
@@ -38,8 +37,4 @@ class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BreedSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-
-class KittensOfBreedApi(generics.RetrieveAPIView):
-    queryset = Breed.objects.all()
-    serializer_class = ShowKittensOfBreedSerializer
 

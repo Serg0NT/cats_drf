@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'kittensApp.apps.KittensAppConfig',
+    'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_swagger',
 ]
 
 REST_FRAMEWORK = {
