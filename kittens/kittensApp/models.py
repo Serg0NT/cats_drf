@@ -24,7 +24,7 @@ class Kitten(models.Model):
                               verbose_name='Порода')
     title = models.TextField(max_length=256, verbose_name='Описание')
     user = models.ForeignKey(User, null=True, blank=True,
-                             related_name='owners',
+                             related_name='kittens',
                              on_delete=models.CASCADE,
                              verbose_name='Хозяин')
 

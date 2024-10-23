@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 
-from .serializers import KittenSerializer, BreedSerializer
-from .models import Kitten, Breed
+from .serializers import KittenSerializer, BreedSerializer, UserSerializer
+from .models import Kitten, Breed, User
 
 
 # Просмотр всех котят
@@ -31,10 +31,22 @@ class BreedsApiList(generics.ListAPIView):
     serializer_class = BreedSerializer
 
 
+class KittensFilterUser(generics.ListAPIView):
+    serializer_class = KittenSerializer
+
+    def get_queryset(self):
+        return Kitten.objects.filter(user_id=self.kwargs['user_id'])
+
+
+class KittensFilterBreed(generics.ListAPIView):
+    serializer_class = KittenSerializer
+
+    def get_queryset(self):
+        return Kitten.objects.filter(breed_id=self.kwargs['breed_id'])
+
+
 # Просмотр, добавление информации или удаление породы по id
-class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Breed.objects.all()
-    serializer_class = BreedSerializer
-    permission_classes = [IsAdminOrReadOnly]
-
-
+# class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Breed.objects.all()
+#     serializer_class = BreedSerializer
+#     permission_classes = [IsAdminOrReadOnly]

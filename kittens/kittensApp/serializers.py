@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from .models import Kitten, Breed
+from .models import Kitten, Breed, User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    kittens = serializers.StringRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'kittens']
 
 
 class KittenSerializer(serializers.ModelSerializer):
@@ -24,5 +32,3 @@ class BreedSerializer(serializers.ModelSerializer):
         model = Breed
         fields = ['name',
                   'kittens']
-
-
