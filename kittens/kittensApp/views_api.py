@@ -8,12 +8,14 @@ from .models import Kitten, Breed, User
 
 # Просмотр всех котят
 class KittensApiList(generics.ListAPIView):
+    """Список всех котят"""
     queryset = Kitten.objects.all()
     serializer_class = KittenSerializer
 
 
 # Просмотр, добавление информации или удаление котенка по id
 class KittensRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    """Просмотр, изменение, удаление записи о котенке"""
     queryset = Kitten.objects.all()
     serializer_class = KittenSerializer
     permission_classes = [IsOwnerOrReadOnly]
@@ -21,9 +23,18 @@ class KittensRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 #  Добавление нового котенка
 class KittensApiAdd(generics.CreateAPIView):
+    """Добавление нового котенка"""
     queryset = Kitten.objects.all()
     serializer_class = KittenSerializer
     permission_classes = [IsAuthenticated]
+
+
+class KittensFilterUser(generics.ListAPIView):
+    """Список котят определенного пользователя"""
+    serializer_class = KittenSerializer
+
+    def get_queryset(self):
+        return Kitten.objects.filter(user_id=self.kwargs['user_id'])
 
 
 class BreedsApiList(generics.ListAPIView):
@@ -31,22 +42,8 @@ class BreedsApiList(generics.ListAPIView):
     serializer_class = BreedSerializer
 
 
-class KittensFilterUser(generics.ListAPIView):
-    serializer_class = KittenSerializer
-
-    def get_queryset(self):
-        return Kitten.objects.filter(user_id=self.kwargs['user_id'])
-
-
 class KittensFilterBreed(generics.ListAPIView):
     serializer_class = KittenSerializer
 
     def get_queryset(self):
         return Kitten.objects.filter(breed_id=self.kwargs['breed_id'])
-
-
-# Просмотр, добавление информации или удаление породы по id
-# class BreedsRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Breed.objects.all()
-#     serializer_class = BreedSerializer
-#     permission_classes = [IsAdminOrReadOnly]

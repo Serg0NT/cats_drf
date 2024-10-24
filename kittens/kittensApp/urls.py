@@ -8,7 +8,7 @@ from .views_api import (KittensApiList,
 
 urlpatterns = [
     # Просмотр всех котят
-    path('kittens/', KittensApiList.as_view(), name='get_list'),
+    path('kittens/', KittensApiList.as_view(), name='get_list_kittens'),
     # Добавление нового котенка
     path('kittens/add/', KittensApiAdd.as_view(), name='add_kitten'),
     # Просмотр, добавление информации или удаление котенка по id

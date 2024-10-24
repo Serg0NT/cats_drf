@@ -23,7 +23,7 @@ class KittensTests(APITestCase):
                             }
 
         Breed.objects.create(name='siam')
-        Kitten.objects.create(age=1212, color='RedBlueWhite', breed_id=1, title='another', user=test_user1)
+        Kitten.objects.create(age=1212, color='RedBlueWhite', breed_id=1, title='another', user=test_user2)
         Kitten.objects.create(age=2323, color='Babel', breed_id=1, title='treti', user=test_user1)
 
     def test_jwt_token(self):
@@ -42,17 +42,26 @@ class KittensTests(APITestCase):
         self.assertEqual({'id': 3, 'age': 2222, 'color': 'RGB', 'breed': 1, 'title': 'ururu'}, response.data)
         self.assertEqual(Kitten.objects.get(id=3).user.username, 'test2')
 
-    def test_get_list_data(self):
+    def test_fail_kitten_add(self):
+        """Тест ошибки добавления записи о котенке"""
+        print('test_fail_kitten_add')
+        url = reverse('add_kitten')
+        response = self.client.post(url, self.kitten_data, format='json')
+
+        self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Kitten.objects.count(), 2)
+
+    def test_get_list_kittens(self):
         """тест получения списка котят"""
-        print('test_get_list_data')
-        url = reverse('get_list')
+        print('test_get_list_kittens')
+        url = reverse('get_list_kittens')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Kitten.objects.count(), 2)
         self.assertTrue({'id': 2, 'age': 2323, 'color': 'Babel', 'breed': 1, 'title': 'treti'} in response.data)
 
-    def test_detail_kitten(self) -> None:
+    def test_detail_kitten(self):
         """тест записи о котенке"""
         print('test_detail_kitten')
         url = reverse('detail_kittens', kwargs={'pk': 1})
@@ -62,3 +71,20 @@ class KittensTests(APITestCase):
         self.assertEqual(response.data,
                          {'id': 1, 'age': 1212, 'color': 'RedBlueWhite', 'breed': 1, 'title': 'another'})
 
+    def test_destroy_kitten(self):
+        """Тест доступа к удалению записи"""
+        print('test_destroy_kitten')
+        url = reverse('detail_kittens', kwargs={'pk': 1})
+        response = self.client.delete(url, headers={'Authorization': self.access_token})
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Kitten.objects.count(), 1)
+
+    def test_fail_destroy_kitten(self):
+        """Тест ошибки доступа к удалению записи"""
+        print('test_destroy_kitten')
+        url = reverse('detail_kittens', kwargs={'pk': 2})
+        response = self.client.delete(url, headers={'Authorization': self.access_token})
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Kitten.objects.count(), 2)
